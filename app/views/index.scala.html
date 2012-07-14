@@ -1,0 +1,89 @@
+@()
+
+@navbarContext = {
+  <li class="active"><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+}
+
+@sidebar  = {
+<div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Options</li>
+              <li><a href="#">Add company</a></li>
+              <li><a href="#">Search</a></li>
+            </ul>
+          </div>
+}
+@main(title = "RegPubFinder")(navbarContext)(sidebar) {
+<script id="searchTemplate" type="text/x-handlebars-template">
+<div class="row-fluid">
+  <div class="span12"><h3><small>Mostrando {{result.total}} resultados para '{{result.name}}'</small></h3></div>
+</div>
+<div class="row-fluid">
+<div class="span12">
+{{#result.hits}}
+<div>
+<h4><a href="#sa/{{_source.nombre}}">{{_source.nombre}}</a></h4>
+</div>
+{{/result.hits}}
+<div class="pagination">
+  <ul>
+{{{pages result}}}
+  </ul>
+</div>
+</div>
+</div>
+</script>
+<script id="fichaTemplate" type="text/x-handlebars-template">
+ {{#models}}
+<div class="row-fluid">
+  <div class="span8"><h1>{{nombre}}</h1><h2>{{domicilio}}  <span class="label label-success">{{estado}}</span></h2></div>
+</div>
+<div class="row-fluid">
+<div class="span2">
+<h4>Ficha</h4><p>{{ficha}}</p>
+<h4>Documento</h4><p>{{documento}}</p>
+<h4>Folio</h4><p>{{folio}}</p>
+<h4>Escritura</h4><p>{{escritura}}</p>
+<h4>Fecha registro</h4><p>{{fechaRegistro}}</p>
+<h4>Notaria</h4><p>{{notaria}}</p>
+</div>
+
+<div class="span4">
+{{#dignatarios}}
+<h4>{{this.[0]}}</h4>
+<p><a href="#search/{{this.[1]}}">{{this.[1]}}</a> <span class="badge">  {{{relCount ../stats this.[1]  }}}</span></p>
+{{/dignatarios}}
+</div>
+
+<div class="span4">
+<h4>Directores</h4>
+<ul class="unstyled">
+{{#directores}}
+<li><a href="#search/{{this}}">{{this}}</a><span class="badge">   {{{relCount ../stats this  }}}</span></li>
+{{/directores}}
+</ul>
+
+<h4>Subscriptores</h4>
+<ul class="unstyled">
+{{#subscriptores}}
+<li><a href="#search/{{this}}">{{this}}</a> <span class="badge">  {{{relCount ../stats this  }}}</span></li>
+{{/subscriptores}}
+</ul>
+
+</div>
+</div>
+<div class="row-fluid">
+  <div class="span10">
+<dl class="dl-horizontal">
+<dt>Capital</dt>
+<dd>{{microCapitalTexto}}</dd>
+<dt>Representante</dt>
+<dd>{{microRepresentanteLegal}}</dd>
+</dl></div>
+</div>
+ {{/models}}
+</script>
+ <div id="searchResults"></div>
+    
+}

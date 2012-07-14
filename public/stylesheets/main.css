@@ -1,0 +1,12 @@
+.estado {
+	background-color: #46a546;
+	font-size: 0.60em;
+	
+color: white;
+height: 25px;
+padding: 4px;
+
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
